@@ -1,0 +1,95 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─── Helpers ─────────────────────────────────────────────────────────────
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    function isParticipant(participantIds) {
+      return isSignedIn() && request.auth.uid in participantIds;
+    }
+
+    // ─── Users (private profile) ──────────────────────────────────────────────
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isOwner(userId);
+
+      // Loyalty Cards — owner only
+      match /loyaltyCards/{cardId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // Legacy subcollections
+      match /recipes/{recipeId} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(userId);
+      }
+
+      match /following/{targetUserId} {
+        allow read: if isSignedIn();
+        allow write: if isOwner(userId);
+      }
+
+      match /followers/{followerId} {
+        allow read: if isSignedIn();
+        allow create, delete: if isSignedIn();
+      }
+
+      match /{document=**} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+
+    // ─── User Progress (private gamification data) ────────────────────────────
+    match /userProgress/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // ─── Tribe Profiles (public only if isDiscoverable === true) ─────────────
+    match /tribeProfiles/{userId} {
+      allow read: if isSignedIn(); // Allow reading any profile if signed in
+      allow write: if isOwner(userId);
+    }
+
+    // ─── Tribe Conversations (private chat) ──────────────────────────────────
+    match /tribeConversations/{conversationId} {
+      allow read: if isSignedIn() && isParticipant(resource.data.participantIds);
+      allow create: if isSignedIn() && isParticipant(request.resource.data.participantIds);
+      allow update: if isSignedIn() && isParticipant(resource.data.participantIds);
+
+      match /messages/{messageId} {
+        allow read: if isSignedIn() && isParticipant(get(/databases/$(database)/documents/tribeConversations/$(conversationId)).data.participantIds);
+        allow create: if isSignedIn() && isParticipant(get(/databases/$(database)/documents/tribeConversations/$(conversationId)).data.participantIds);
+      }
+    }
+
+    // ─── Public Content (posts, recipes, comments) ───────────────────────────
+    match /posts/{postId} {
+      allow read: if true;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if isSignedIn();
+        allow delete: if isSignedIn() && (resource.data.userId == request.auth.uid || get(/databases/$(database)/documents/posts/$(postId)).data.userId == request.auth.uid);
+      }
+      
+      match /reactions/{userId} {
+        allow read: if true;
+        allow write: if isOwner(userId);
+      }
+    }
+
+    match /recipes/{recipeId} {
+      allow read: if resource.data.isPublic == true || resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+  }
+}

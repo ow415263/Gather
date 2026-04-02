@@ -1,0 +1,164 @@
+@import 'tailwindcss';
+@import "tw-animate-css";
+
+@layer base {
+  @font-face {
+    font-family: 'Office Times Round';
+    src: url('./assets/fonts/OfficeTimesRound-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Office Times Sharp';
+    src: url('./assets/fonts/OfficeTimesSharp-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Roslindale';
+    src: url('./assets/fonts/Roslindale-DisplayRegular-Testing.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Roslindale';
+    src: url('./assets/fonts/Roslindale-DisplayBold-Testing.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Rethink Sans';
+    src: url('./assets/fonts/RethinkSans-Variable.ttf') format('truetype');
+    font-weight: 400 800;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Rethink Sans';
+    src: url('./assets/fonts/RethinkSans-Italic-Variable.ttf') format('truetype');
+    font-weight: 400 800;
+    font-style: italic;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    font-family: 'Rethink Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Roslindale', 'Playfair Display', serif;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+:root {
+  --background: #FAFAFA;
+  --foreground: #1A1A1A;
+
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+
+  --primary: #FF4500;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #F5F5F5;
+  --secondary-foreground: #1A1A1A;
+
+  --muted: #F5F5F5;
+  --muted-foreground: #757575;
+
+  --accent: #FF4500;
+  --accent-foreground: #FFFFFF;
+
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #E5E5E5;
+  --input: #E5E5E5;
+  --ring: #FF4500;
+
+  --radius: 0.75rem;
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.5);
+  --radius-xl: calc(var(--radius) * 2);
+  --radius-2xl: calc(var(--radius) * 3);
+  --radius-full: 9999px;
+}
+
+/* Desktop nav hover effect - adjust content when sidebar is hovered */
+@media (min-width: 768px) {
+  #desktop-nav:hover~* {
+    padding-left: 13rem !important;
+  }
+
+  #desktop-nav:hover~* .shopping-list-input {
+    left: 13rem !important;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}

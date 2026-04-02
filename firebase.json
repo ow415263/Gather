@@ -1,0 +1,42 @@
+{
+    "firestore": {
+        "rules": "firestore.rules"
+    },
+    "storage": {
+        "rules": "storage.rules"
+    },
+    "hosting": {
+        "public": "dist",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "rewrites": [
+            {
+                "source": "/api/extract-recipe-url",
+                "function": "extractRecipeFromUrl"
+            },
+            {
+                "source": "/api/extract-recipe",
+                "function": "extractRecipe"
+            },
+            {
+                "source": "**",
+                "destination": "/index.html"
+            }
+        ]
+    },
+    "functions": [
+        {
+            "source": "functions",
+            "codebase": "default",
+            "ignore": [
+                "node_modules",
+                ".git",
+                "firebase-debug.log",
+                "firebase-debug.*.log"
+            ]
+        }
+    ]
+}
