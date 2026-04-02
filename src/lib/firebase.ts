@@ -11,16 +11,16 @@ const normalizeMeasurementId = (value: string | undefined) => {
   return trimmed.startsWith('G-') ? trimmed : `G-${trimmed.replace(/^G-/, '')}`
 }
 
-// Firebase configuration with fallbacks for Capacitor
-const measurementId = normalizeMeasurementId(import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-E8X8MQJPE1')
+// Firebase configuration — all values must come from .env (never hardcode keys here)
+const measurementId = normalizeMeasurementId(import.meta.env.VITE_FIREBASE_MEASUREMENT_ID)
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyCCSELzDYkOEMRXoRRxMna-RbIUv87fRS4',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'recipebook-5a2d6.firebaseapp.com',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'recipebook-5a2d6',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'recipebook-5a2d6.firebasestorage.app',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '261114422744',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:261114422744:web:3e28123d45b2af43c67ead',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
   ...(measurementId ? { measurementId } : {})
 }
 
