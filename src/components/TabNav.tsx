@@ -9,9 +9,9 @@ interface TabNavProps {
 }
 
 const TAB_COLOURS = {
-  you:   '#3F7347',
+  you:   '#329783',
   shop:  '#6B93FF',
-  tribe: '#FF7C7C',
+  tribe: '#FF6A41',
 } as const
 
 // Cook! button — exact SVG from user's file, self-contained
@@ -140,14 +140,14 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
                   <tab.Icon
                     size={20}
                     className="flex-shrink-0 transition-colors duration-200"
-                    style={{ color: isActive ? colour : '#AAAAAA' }}
+                    style={{ color: isActive ? colour : '#484848' }}
                   />
                   <span
                     style={{
                       fontSize: 13,
                       fontFamily: "'Rethink Sans', sans-serif",
                       fontWeight: isActive ? 700 : 400,
-                      color: isActive ? colour : '#AAAAAA',
+                      color: isActive ? colour : '#484848',
                       lineHeight: 1,
                       transition: 'color 0.2s',
                     }}
@@ -202,7 +202,7 @@ export function TabNav({ activeTab, onTabChange }: TabNavProps) {
             >
               <tab.Icon
                 size={24}
-                style={{ color: isActive ? colour : '#AAAAAA' }}
+                style={{ color: isActive ? colour : '#484848' }}
                 className="flex-shrink-0 mx-auto group-hover:mx-0"
               />
               <span

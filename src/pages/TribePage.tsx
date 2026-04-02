@@ -435,9 +435,9 @@ function GlobalPostCard({ post }: { post: any }) {
 
 // ─── Per-friend accent colours for hexagon borders ──────────────────────────
 const FRIEND_COLOURS = [
-    { border: '#FF7C7C', shadow: 'rgba(255,124,124,0.45)' }, // coral
+    { border: '#FF6A41', shadow: 'rgba(255,106,65,0.45)' }, // coral
     { border: '#6B93FF', shadow: 'rgba(107,147,255,0.45)' }, // blue
-    { border: '#3F7347', shadow: 'rgba(63,115,71,0.45)'  }, // green
+    { border: '#329783', shadow: 'rgba(50,151,131,0.45)'  }, // green
     { border: '#FFB347', shadow: 'rgba(255,179,71,0.45)'  }, // amber
     { border: '#C77DFF', shadow: 'rgba(199,125,255,0.45)' }, // purple
 ]
@@ -535,7 +535,7 @@ function HexFriend({
                     fontSize: 12,
                     fontFamily: "'Rethink Sans', sans-serif",
                     fontWeight: 400,
-                    color: '#555',
+                    color: '#484848',
                     lineHeight: 1,
                 }}
             >
@@ -979,7 +979,7 @@ export function TribePage() {
                                     fontSize: 12,
                                     fontFamily: "'Rethink Sans', sans-serif",
                                     fontWeight: 400,
-                                    color: '#999',
+                                    color: '#484848',
                                     letterSpacing: 0.3,
                                 }}
                             >
